@@ -43,7 +43,7 @@ For the Imagenet model, you can get it from the OpenAI guided diffusion reposito
 When generating samples for the inverse problem with generate_conditional.py, you need to set openai_state_dict_path to models/MODEL_NAME.pt and openai_setup_path to models/256x256_diffusion_uncond_setup.txt or models/ffhq_10m_setup.txt respectively for Imagenet and FFHQ. 
 
 ## Getting the variances of frequencies in the DCT basis
-To get the DCT variances of the dataset for the Free Hunch model, we have already included them in data/imagenet/dct_variance.pt. They are extracted from the Imagenet validation data, and we used the same variances for the FFHQ experiments. 
+To get the DCT variances of the dataset for the Free Hunch model, we have already included them in data/imagenet/dct_variance.pt. They are extracted from the Imagenet validation data, and we used the same variances for the FFHQ experiments. You can also run `do_frequency_analysis.py` to extract the variances from the data (after downloading the data). 
 
 ## Running experiments
 

@@ -84,7 +84,7 @@ config:
   scaling: none
   architecture: openai
   openai_state_dict_path: models/256x256_diffusion_uncond.pt
-  openai_setup_path: models/256x256_diffusion_uncond_setup.txt
+  openai_setup_path:  models/256x256_diffusion_uncond_setup.txt
   iddpm_preconditioning: linear
   conditional: true
   dataset_name: training.dataset.ImageFolderDataset
@@ -110,7 +110,7 @@ config:
   project_to_diagonal: false
   space_step_update_threshold: 10.0
   space_step_update_lower_threshold: 1.0
-  scale_factor: 4 # scale factor for the super-resolution problem
+  scale_factor: 2 # scale factor for the super-resolution problem
   num_other_images_to_save: 200
   max_rtol: 1
   do_space_updates: true
@@ -122,19 +122,3 @@ config:
   use_rtol_func: false
   diffpir_lambda: 10
   use_ddnm_kernel_params: false # for DDNM+ Gaussian blur to showcase that it works with smaller kernels
-
-# hydra:
-#   run:
-#     dir: out/${now:%Y-%m-%d}/${now:%H-%M-%S}_${hydra.job.name}
-#   sweep:
-#     dir: out/${now:%Y-%m-%d}/${now:%H-%M-%S}_${hydra.job.name}
-#   job:
-#     config:
-#       override_dirname:
-#         kv_sep: '='
-#         item_sep: ','
-#         exclude_keys: [seeds]
-#     name: ${dataset}_${S_churn}_${dps_zeta}
-# defaults:
-#   - submitit
-#   - override hydra/launcher: submitit_slurm
