@@ -1,7 +1,5 @@
 # Official code repository for the paper: Free Hunch: Denoiser Covariance Estimation for Diffusion Models Without Extra Costs
 
-This repository includes code for the Free Hunch paper: 
-
 This repository is the official implementation of the methods in the publication:
 
 * Severi Rissanen, Markus Heinonen, and Arno Solin (2025). **Free Hunch: Denoiser Covariance Estimation for Diffusion Models Without Extra Costs**. In *International Conference on Learning Representations (ICLR)*. [[arXiv]](https://arxiv.org/abs/2410.11149) [[project page]](https://aaltoml.github.io/free-hunch)
