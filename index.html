@@ -106,7 +106,7 @@
       </h2>
       <div class="content has-text-justified">
         <ul>
-          <li><b>Covariance for .</b> We reuse information already present in training data and the generative trajectory to estimate the denoiser covariance—no retraining, no score Hessians.</li>
+          <li><b>Covariance for Diffusion Models.</b> We reuse information already present in training data and the generative trajectory to estimate the denoiser covariance—no retraining, no score Hessians.</li>
           <li><b>Two lightweight updates.</b> A <b>time update</b> transfers covariance across noise levels; a <b>space update</b> performs BFGS-like low-rank corrections along the sampler path.</li>
           <li><b>Works effectively for Reconstruction Guidance.</b> Better covariance → stable reconstruction guidance for linear inverse problems → sharper details at low step counts.</li>
         </ul>
