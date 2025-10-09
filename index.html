@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description"
+        content="Free Hunch — Denoiser Covariance Estimation for Diffusion Models Without Extra Costs">
+  <meta name="keywords"
+        content="Diffusion Models, Reconstruction Guidance, Denoiser Covariance, Inverse Problems">
+
+  <title>Free Hunch — Denoiser Covariance Estimation for Diffusion Models Without Extra Costs</title>
+
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+
+  <!-- Bulma & site styles (match reference look-and-feel) -->
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+
+  <!-- Favicon (emoji like the reference) -->
+  <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎈</text></svg>">
+
+  <!-- JS (same stack as reference) -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+
+  <!-- MathJax for inline \( \) equations in the content -->
+  <script>
+    window.MathJax = { tex: { inlineMath: [['\\(','\\)'], ['$', '$']] }, svg: { fontCache: 'global' } };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+
+<body>
+
+<!-- ======================= HERO ======================= -->
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+
+          <h1 class="title is-1 publication-title">
+            <strong>Free Hunch</strong>: Denoiser Covariance Estimation for Diffusion Models Without Extra Costs
+          </h1>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="mailto:severi.rissanen@aalto.fi">Severi Rissanen</a> ·
+              <a href="https://users.aalto.fi/~heinonem/">Markus Heinonen</a> ·
+              <a href="https://users.aalto.fi/~asolin/">Arno Solin</a>
+            </span>
+          </div>
+
+          <div class="is-size-6 publication-authors">
+            <span class="author-block">Aalto University</span>
+          </div>
+
+          <h2 class="title is-4" style="margin-top: 1rem;">ICLR 2025</h2>
+
+          <!-- Quick Links -->
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/2410.11149"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="ai ai-arxiv"></i></span>
+                  <span>Paper (arXiv)</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://github.com/AaltoML/free-hunch"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fab fa-github"></i></span>
+                  <span>Code</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="#bibtex"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fas fa-quote-right"></i></span>
+                  <span>BibTeX</span>
+                </a>
+              </span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= TL;DR ======================= -->
+<section class="section" style="margin-top: -40px;">
+  <div class="container is-max-desktop">
+    <div class="content" style="display:flex;">
+      <h2 class="title is-5" style="margin-right:10px; white-space:nowrap; letter-spacing:-2px;">
+        <span style="color:red;">T</span>
+        <span style="color:blue;">L</span>
+        <span style="color:green;">D</span>
+        <span style="color:orange;">R</span><span>:</span>
+      </h2>
+      <div class="content has-text-justified">
+        <ul>
+          <li><b>Covariance for .</b> We reuse information already present in training data and the generative trajectory to estimate the denoiser covariance—no retraining, no score Hessians.</li>
+          <li><b>Two lightweight updates.</b> A <b>time update</b> transfers covariance across noise levels; a <b>space update</b> performs BFGS-like low-rank corrections along the sampler path.</li>
+          <li><b>Works effectively for Reconstruction Guidance.</b> Better covariance → stable reconstruction guidance for linear inverse problems → sharper details at low step counts.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= TEASER IMAGE ======================= -->
+<section class="teaser">
+  <div class="container is-max-desktop">
+    <div class="columns is-vcentered interpolation-panel">
+      <div class="column has-text-centered">
+        <img src="assets/fig_1.png" alt="Deblurring comparison across methods with few solver steps"
+             style="max-width:100%; border-radius:12px;">
+        <p style="margin-top:8px;">
+          <em>Teaser.</em> With few sampler steps, accurate denoiser covariance turns out to be crucial for
+          high-fidelity reconstruction guidance for linear inverse problems.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= ABSTRACT ======================= -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            The conditional score for inverse problems needs the denoiser <b>mean and covariance</b> of
+            \(p(x_0 \mid x_t)\). Prior work either adds heavy test-time compute, modifies training/architecture,
+            or uses crude (often diagonal) covariances. <b>Free Hunch (FH)</b> integrates two <em>free</em> sources:
+            (i) data covariance (DCT-diagonal for images) and (ii) curvature observed along the generative trajectory
+            via a BFGS-style online update. A simple time-transfer rule moves covariance between noise levels.
+            On ImageNet inverse problems (deblurring, inpainting, super-resolution), FH improves quality—especially
+            LPIPS—at small step counts, while staying training-free and architecture-agnostic.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= METHOD AT A GLANCE ======================= -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Method at a glance</h2>
+        <div class="content has-text-justified">
+          <p>
+            <b>Tweedie link (2nd order).</b> The Tweedie identities connect the score to the denoiser mean and
+            covariance; the covariance involves the Hessian of \(\log p(x_t)\). Instead of computing Hessians,
+            FH approximates the covariance via:
+          </p>
+          <ol>
+            <li><b>Time update.</b> Transfer \(\Sigma_{0\mid t}(x_t)\) → \(\Sigma_{0\mid t+\Delta t}(x_t)\)
+                analytically using a local Gaussian approximation of \(p(x_t)\) and the forward SDE evolution.</li>
+            <li><b>Space update.</b> When the sampler moves from \(x_t\) to \(x_t+\Delta x\) at the <em>same</em> time \(t\),
+                use a BFGS-like low-rank correction based on finite differences of the denoiser mean \(\mu_{0\mid t}\).</li>
+            <li><b>Efficient representation.</b> Maintain \(\Sigma\) as <b>D + U U^\top − V V^\top</b> so both updates and
+                inverses stay cheap (Woodbury on small \(k \times k\) systems).</li>
+            <li><b>Initialization.</b> For images, start from <b>DCT-diagonal</b> data covariance; it’s a strong prior and avoids
+                early over/under-scaling.</li>
+          </ol>
+        </div>
+
+        <div class="has-text-centered" style="margin-top: 1rem;">
+          <img src="assets/fig_2.png"
+               alt="Posterior geometry and effect of covariance choice"
+               style="max-width:100%; border-radius:12px;">
+          <p style="margin-top:8px;">
+            <em>Geometry.</em> Poor (diagonal) covariances distort guidance geometry; FH aligns the local posterior
+            shape with the sampler’s trajectory.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= WHY IT HELPS ======================= -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Why it helps (guidance scale)</h2>
+        <div class="content has-text-justified">
+          <p>
+            Diagonal/identity covariances can <b>over-amplify</b> the conditional term, especially at high noise levels and
+            in high dimensions—forcing post-hoc clipping or ad-hoc scaling. With FH, the guidance magnitude is naturally
+            calibrated, reducing the need for such tricks.
+          </p>
+        </div>
+
+        <div class="has-text-centered">
+          <img src="assets/fig_guidance_strength.png"
+               alt="LPIPS vs guidance strength; FH needs little or no scaling"
+               style="max-width:420px; border-radius:12px;">
+          <p style="margin-top:8px;">
+            <em>Less tuning, more fidelity.</em> With better covariance, the optimal guidance is close to 1 (no scaling).
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= RESULTS SNAPSHOT ======================= -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Results snapshot</h2>
+        <div class="content has-text-justified">
+          <p>
+            Across four linear inverse problems on ImageNet 256×256—Gaussian/motion deblurring, random inpainting, and
+            4× super-resolution—FH (and FH+Online) consistently improves perceptual quality at <b>low step counts</b>
+            (e.g., 15/30-step Heun), with strong LPIPS and crisp details. See the paper for full tables, ablations,
+            and more qualitative results.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= GET THE CODE ======================= -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Get the code</h2>
+        <div class="content">
+          <ul style="list-style: none; padding-left: 0;">
+            <li>
+              Repository:
+              <a href="https://github.com/AaltoML/free-hunch">github.com/AaltoML/free-hunch</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Dummy anchor for the top BibTeX link (content intentionally omitted per Markdown) -->
+<a id="bibtex"></a>
+
+</body>
+</html>
