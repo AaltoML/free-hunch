@@ -28,7 +28,7 @@ permalink: /
 ---
 
 <div align="center">
-  <img src="{{ '/assets/free-hunch/fig_1.png' | relative_url }}" alt="Deblurring comparison across methods with few solver steps" style="max-width:100%; border-radius:12px;" />
+  <img src="{{ '/assets/fig_1.png' | relative_url }}" alt="Deblurring comparison across methods with few solver steps" style="max-width:100%; border-radius:12px;" />
   <p><em>Teaser.</em> With few sampler steps, accurate denoiser covariance turns out to be crucial for high-fidelity reconstruction.</p>
 </div>
 
@@ -52,7 +52,7 @@ The conditional score for inverse problems needs the denoiser **mean and covaria
 4. **Initialization.** For images, start from **DCT-diagonal** data covariance; it’s a strong prior and avoids early over/under-scaling.
 
 <div align="center">
-  <img src="{{ '/assets/free-hunch/fig_2.png' | relative_url }}" alt="Posterior geometry and effect of covariance choice" style="max-width:100%; border-radius:12px;" />
+  <img src="{{ '/assets/fig_2.png' | relative_url }}" alt="Posterior geometry and effect of covariance choice" style="max-width:100%; border-radius:12px;" />
   <p><em>Geometry.</em> Poor (diagonal) covariances distort guidance geometry; FH aligns the local posterior shape with the sampler’s trajectory.</p>
 </div>
 
@@ -61,7 +61,7 @@ The conditional score for inverse problems needs the denoiser **mean and covaria
 Diagonal/identity covariances can **over-amplify** the conditional term, especially at high noise levels and in high dimensions—forcing post-hoc clipping or ad-hoc scaling. With FH, the guidance magnitude is naturally calibrated, reducing (or removing) the need for such tricks.
 
 <div align="center">
-  <img src="{{ '/assets/free-hunch/fig_guidance_strength.png' | relative_url }}" alt="LPIPS vs guidance strength; FH needs little or no scaling" style="max-width:420px; border-radius:12px;" />
+  <img src="{{ '/assets/fig_guidance_strength.png' | relative_url }}" alt="LPIPS vs guidance strength; FH needs little or no scaling" style="max-width:420px; border-radius:12px;" />
   <p><em>Less tuning, more fidelity.</em> With better covariance, the optimal guidance is close to 1 (no scaling).</p>
 </div>
 
