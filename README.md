@@ -34,9 +34,9 @@ permalink: /
 
 ## TL;DR
 
-- **Covariance for free.** We reuse information already present in training data and the generative trajectory to estimate the denoiser covariance—no retraining, no score Hessians.  
+- **Covariance for .** We reuse information already present in training data and the generative trajectory to estimate the denoiser covariance—no retraining, no score Hessians.  
 - **Two lightweight updates.** A **time update** transfers covariance across noise levels; a **space update** performs BFGS-like low-rank corrections along the sampler path.  
-- **Plug-and-play guidance.** Better covariance → well-scaled, stable reconstruction guidance → sharper details at low step counts.
+- **Works effectively for Reconstruction Guidance.** Better covariance → stable reconstruction guidance for linear inverse problems → sharper details at low step counts.
 
 ## Abstract
 
@@ -58,7 +58,7 @@ The conditional score for inverse problems needs the denoiser **mean and covaria
 
 ## Why it helps (guidance scale)
 
-Diagonal/identity covariances can **over-amplify** the conditional term, especially at high noise levels and in high dimensions—forcing post-hoc clipping or ad-hoc scaling. With FH, the guidance magnitude is naturally calibrated, reducing (or removing) the need for such tricks.
+Diagonal/identity covariances can **over-amplify** the conditional term, especially at high noise levels and in high dimensions—forcing post-hoc clipping or ad-hoc scaling. With FH, the guidance magnitude is naturally calibrated, reducing the need for such tricks.
 
 <div align="center">
   <img src="assets/fig_guidance_strength.png" alt="LPIPS vs guidance strength; FH needs little or no scaling" style="max-width:420px; border-radius:12px;" />
@@ -71,11 +71,4 @@ Across four linear inverse problems on ImageNet 256×256—Gaussian/motion deblu
 
 ## Get the code
 
-- Repository: <a href="https://github.com/AaltoML/free-hunch">github.com/AaltoML/free-hunch</a>  
-- Typical setup (see repo for exact instructions):
-  ```bash
-  git clone https://github.com/AaltoML/free-hunch.git
-  cd free-hunch
-  # (optional) conda create -n free-hunch python=3.10 && conda activate free-hunch
-  pip install -e .
-
+- Repository: <a href="https://github.com/AaltoML/free-hunch">github.com/AaltoML/free-hunch</a>
