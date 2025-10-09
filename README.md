@@ -29,7 +29,7 @@ permalink: /
 
 <div align="center">
   <img src="assets/fig_1.png" alt="Deblurring comparison across methods with few solver steps" style="max-width:100%; border-radius:12px;" />
-  <p><em>Teaser.</em> With few sampler steps, accurate denoiser covariance turns out to be crucial for high-fidelity reconstruction.</p>
+  <p><em>Teaser.</em> With few sampler steps, accurate denoiser covariance turns out to be crucial for high-fidelity reconstruction guidance for linear inverse problems.</p>
 </div>
 
 ## TL;DR
