@@ -177,7 +177,7 @@
                 analytically using a local Gaussian approximation of \(p(x_t)\) and the forward SDE evolution.</li>
             <li><b>Space update.</b> When the sampler moves from \(x_t\) to \(x_t+\Delta x\) at the <em>same</em> time \(t\),
                 use a BFGS-like low-rank correction based on finite differences of the denoiser mean \(\mu_{0\mid t}\).</li>
-            <li><b>Efficient representation.</b> Maintain \(\Sigma\) as <b>D + U U^\top − V V^\top</b> so both updates and
+            <li><b>Efficient representation.</b> Maintain \(\Sigma\) as <b>D + U U<sup>T</sup> − V V<sup>T</sup></b> so both updates and
                 inverses stay cheap (Woodbury on small \(k \times k\) systems).</li>
             <li><b>Initialization.</b> For images, start from <b>DCT-diagonal</b> data covariance; it’s a strong prior and avoids
                 early over/under-scaling.</li>
