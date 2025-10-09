@@ -315,11 +315,11 @@ The codebase is built on code from multiple other repositories, including https:
 
 ## Citation
 If you want to cite the paper, you can use the following bibtex entry:
-```bash
+```
 @inproceedings{rissanen2024free,
   title={Free Hunch: Denoiser Covariance Estimation for Diffusion Models Without Extra Costs},
   author={Rissanen, Severi and Heinonen, Markus and Solin, Arno},
-  booktitle={International Conference for Learning Representations},
+  booktitle={International Conference on Learning Representations},
   year={2025}
 }
 ```
